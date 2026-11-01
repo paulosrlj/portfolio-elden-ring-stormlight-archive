@@ -1,9 +1,9 @@
-// Edite este arquivo com suas informações reais.
+// Conteúdo comum aos dois portfólios. Edite aqui uma vez e ele aparece nos dois temas.
+// Os textos temáticos (tagline, sobre, habilidades, nomes de projetos) ficam em src/<tema>/data.js.
 
 export const profile = {
   name: 'Paulo Sérgio',
   title: 'Desenvolvedor Full Stack',
-  tagline: 'Mais de 3 anos forjando APIs, automações e aplicações web.',
   location: 'Cajazeiras · PB',
   languages: 'Português · Inglês C1',
   email: 'paulosrlj9095@gmail.com',
@@ -12,83 +12,43 @@ export const profile = {
   cv: '', // link para o PDF do currículo (o botão só aparece se preenchido)
 }
 
-export const about = [
-  'Sou desenvolvedor Full Stack com mais de 3 anos de jornada no desenvolvimento e evolução de aplicações web e APIs REST, empunhando JavaScript/TypeScript, Node.js, C# com ASP.NET Core e Ruby on Rails.',
-  'Minha especialidade é transformar trabalho manual em automação: integrações entre sistemas, filas de mensagens e robôs que operam sem supervisão humana, hospedados na nuvem. Trago na bagagem bancos de dados relacionais, front-end em React, code review e boas práticas de engenharia como SOLID e design patterns.'
-]
-
-// Atributos estilo tela de nível (0–99)
-export const attributes = [
-  { name: 'Node.js / TypeScript', short: 'VIG', value: 86 },
-  { name: 'C# / ASP.NET Core', short: 'MEN', value: 75 },
-  { name: 'React / Next.js', short: 'FOR', value: 68 },
-  { name: 'Ruby on Rails', short: 'RES', value: 57 },
-  { name: 'SQL (Postgres, MySQL, Oracle)', short: 'DES', value: 50 },
-  { name: 'Automação & Mensageria', short: 'INT', value: 75 },
-  { name: 'Cloud (GCP, AWS) & Docker', short: 'FÉ', value: 75 },
-  { name: 'Testes (Jest, xUnit, RSpec)', short: 'ARC', value: 22 },
-]
-export const level = calcNivel(attributes);
-
-export const equipment = [
-  { slot: 'Mão direita', item: 'TypeScript & Node.js' },
-  { slot: 'Mão esquerda', item: 'C# & ASP.NET Core' },
-  { slot: 'Elmo', item: 'Git · GitHub · CI/CD' },
-  { slot: 'Armadura', item: 'Docker · GCP · AWS' },
-  { slot: 'Talismã', item: 'RabbitMQ · Redis · Sidekiq' },
-  { slot: 'Talismã', item: 'Claude Code · Cursor · Copilot' },
-  { slot: 'Selo', item: 'SOLID · Design Patterns · SCRUM' },
-]
-
-// Projetos como "itens" do inventário. link/repo vazios escondem os botões.
-export const projects = [
-  {
-    name: 'Autômato da Graça Consular',
+// Fatos de cada projeto. link/repo vazios escondem os botões.
+export const projects = {
+  consular: {
     type: 'Automação · Youvisa',
-    glyph: 'seal',
-    scaling: { Node: 'S', RabbitMQ: 'A', GCP: 'B' },
     description:
       'Automação de agendamento de entrevistas consulares que eliminou o trabalho manual do time de vistos, operando sem supervisão humana. Construída com Node.js, TypeScript, RabbitMQ e Puppeteer no Google Cloud.',
     tags: ['Node.js', 'TypeScript', 'RabbitMQ', 'Puppeteer', 'GCP'],
     link: '',
     repo: '',
   },
-  {
-    name: 'Pergaminho DS-160',
+  ds160: {
     type: 'Automação · Youvisa',
-    glyph: 'tome',
-    scaling: { "Electron": 'S', TypeScript: 'A' },
     description:
       'Preenchimento automático do formulário DS-160: uma etapa de 30–60 minutos caiu para menos de 5, aumentando a produtividade em ~83%–92% conforme o tipo de ficha.',
     tags: ['TypeScript', 'Puppeteer', 'Automação'],
     link: '',
     repo: '',
   },
-  {
-    name: 'E-commerce ultra aprimorado',
+  ecommerce: {
     type: 'Projeto pessoal · Full Stack',
-    glyph: 'shield',
-    scaling: { 'ASP.NET': 'S', React: 'B', AWS: 'C' },
     description:
       'Projeto de e-commerce overengineered. Este projeto busca utilizar o máximo possível de tecnologias, padrões de projeto e boas práticas com propósito de aprendizado.',
     tags: ['C#', 'ASP.NET Core', 'React', 'Stripe', 'AWS'],
     link: '',
     repo: '',
   },
-  {
-    name: 'Amuleto Stray Pets',
+  strayPets: {
     type: 'Projeto pessoal · Mobile',
-    glyph: 'sword',
-    scaling: { 'Spring Boot': 'A', 'React Native': 'A', MySQL: 'B' },
     description:
       'Aplicativo Android para localização, rastreio e adoção de animais de rua, com Google Maps para geolocalização, imagens no AWS S3 e autenticação com Spring Security + JWT.',
     tags: ['Spring Boot', 'React Native', 'MySQL', 'AWS S3'],
     link: '',
     repo: '',
   },
-]
+}
 
-// Experiência e formação como "Locais de Graça" descobertos
+// Experiência e formação
 export const journey = [
   {
     period: 'Set 2026 — Presente',
@@ -130,7 +90,3 @@ export const journey = [
     text: 'Formação acadêmica, complementada por cursos de React Native (Udemy) e JavaScript e Responsive Web Design (freeCodeCamp).',
   },
 ]
-
-function calcNivel(attributes) {
-  return attributes.reduce((anterior, atual) => anterior + atual.value, 0);
-}

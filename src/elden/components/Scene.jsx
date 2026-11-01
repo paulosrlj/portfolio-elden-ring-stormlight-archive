@@ -4,8 +4,8 @@ import { Stars } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import { scrollState } from '../scroll'
-import { mulberry32, makeGlowTexture } from './three-utils'
+import { scrollState } from '../../shared/scroll'
+import { mulberry32, makeGlowTexture } from '../../shared/three-utils'
 
 const GOLD = new THREE.Color('#f0c35a')
 

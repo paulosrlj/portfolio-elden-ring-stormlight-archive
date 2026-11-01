@@ -1,0 +1,141 @@
+:root {
+  --text: #ece6da;
+  --muted: #9c968c;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --gold: #d4af5a;
+  --gold-bright: #f3d98b;
+  --light: #9fe0ff;
+  --light-bright: #e2f6ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #08080b;
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 19px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.chooser { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
+
+/* ---------- Cabeçalho sobre a divisa ---------- */
+.chooser-head {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 5; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 2.6rem 16px 0; text-shadow: 0 2px 14px #000;
+  animation: rise 1.4s ease-out both;
+}
+.chooser-name {
+  font-family: 'Cinzel', serif; font-size: clamp(1.3rem, 3vw, 1.9rem); letter-spacing: 0.2em; text-transform: uppercase;
+}
+.chooser-role { font-size: 1rem; color: var(--muted); letter-spacing: 0.08em; }
+.chooser-ask { margin-top: 0.9rem; font-style: italic; font-size: 1.1rem; }
+
+/* ---------- Os dois mundos ---------- */
+.worlds { display: flex; height: 100%; }
+
+.world {
+  position: relative; flex: 1 1 0; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 7rem 2rem 3rem; text-align: center; cursor: pointer;
+  transition: flex-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.9s;
+}
+.worlds:hover .world:not(:hover), .worlds:focus-within .world:not(:focus-visible):not(:hover) { filter: brightness(0.55) saturate(0.7); }
+.world:hover, .world:focus-visible { flex-grow: 1.45; }
+.world:focus-visible { outline: none; }
+
+.world-bg { position: absolute; inset: 0; z-index: -1; transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.world:hover .world-bg, .world:focus-visible .world-bg { transform: scale(1.06); }
+
+.world-emblem {
+  width: min(46vh, 70%); max-width: 360px; margin-bottom: 1.6rem; flex-shrink: 0;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), filter 1s;
+}
+.world:hover .world-emblem, .world:focus-visible .world-emblem { transform: scale(1.06); }
+
+.world-body { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; max-width: 30ch; }
+.world-kicker { font-size: 0.78rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--muted); }
+.world-title { font-weight: 400; text-transform: uppercase; font-size: clamp(1.7rem, 3.6vw, 2.9rem); line-height: 1.1; }
+.world-text { font-style: italic; font-size: 1.1rem; color: var(--text); opacity: 0.85; }
+.world-cta {
+  margin-top: 1.2rem; padding: 0.7rem 2rem; border: 1px solid;
+  font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase;
+  transition: all 0.4s;
+}
+
+/* Elden Ring: ouro sobre a escuridão */
+.world-elden { color: var(--gold); }
+.world-elden .world-bg {
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(240, 195, 90, 0.22) 0%, transparent 55%),
+    linear-gradient(180deg, #0d0a07 0%, #17110a 60%, #0a0807 100%);
+}
+.world-elden .world-emblem { filter: drop-shadow(0 0 10px rgba(240, 195, 90, 0.55)); animation: ember 5s ease-in-out infinite; }
+.world-elden .world-title, .world-elden .world-cta { font-family: 'Cinzel', serif; }
+.world-elden .world-title {
+  background: linear-gradient(180deg, #fff3cf 0%, var(--gold-bright) 45%, var(--gold) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.world-elden .world-cta { color: var(--gold-bright); border-color: rgba(212, 175, 90, 0.5); }
+.world-elden:hover .world-cta, .world-elden:focus-visible .world-cta {
+  background: rgba(212, 175, 90, 0.15); border-color: var(--gold); box-shadow: 0 0 24px rgba(212, 175, 90, 0.3);
+}
+
+/* Stormlight: azul de tempestade, chuva e relâmpagos */
+.world-storm { color: var(--light); }
+.world-storm .world-bg {
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(120, 200, 255, 0.2) 0%, transparent 55%),
+    linear-gradient(180deg, #050912 0%, #0b1424 60%, #060a12 100%);
+}
+.world-storm .world-bg::before {
+  content: ''; position: absolute; inset: -20% 0 0;
+  background: repeating-linear-gradient(100deg, transparent 0 14px, rgba(159, 224, 255, 0.07) 14px 15px, transparent 15px 38px);
+  animation: rain 0.9s linear infinite;
+}
+.world-storm .world-bg::after {
+  content: ''; position: absolute; inset: 0; background: rgba(210, 240, 255, 0.5); opacity: 0;
+  animation: flash 7s ease-out infinite;
+}
+.world-storm .world-emblem { filter: drop-shadow(0 0 10px rgba(159, 224, 255, 0.6)); animation: infuse 4s ease-in-out infinite; }
+.world-storm .world-title, .world-storm .world-cta { font-family: 'Marcellus SC', 'Marcellus', serif; }
+.world-storm .world-title { color: var(--light-bright); text-shadow: 0 0 24px rgba(159, 224, 255, 0.45); }
+.world-storm .world-cta { color: var(--light-bright); border-color: rgba(159, 224, 255, 0.45); }
+.world-storm:hover .world-cta, .world-storm:focus-visible .world-cta {
+  background: rgba(159, 224, 255, 0.12); border-color: var(--light); box-shadow: 0 0 24px rgba(159, 224, 255, 0.3);
+}
+
+/* divisa entre os mundos */
+.world-elden::after {
+  content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1px;
+  /* só aparece abaixo do cabeçalho, que fica centralizado sobre a divisa */
+  background: linear-gradient(180deg, transparent 22%, rgba(212, 175, 90, 0.6) 40%, rgba(159, 224, 255, 0.6) 75%, transparent);
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(-12px); } }
+@keyframes ember { 50% { filter: drop-shadow(0 0 22px rgba(240, 195, 90, 0.85)); } }
+@keyframes infuse { 50% { filter: drop-shadow(0 0 24px rgba(159, 224, 255, 0.95)); } }
+@keyframes rain { to { transform: translate(-7px, 38px); } }
+@keyframes flash { 0%, 88%, 100% { opacity: 0; } 89% { opacity: 0.35; } 90% { opacity: 0.05; } 91.5% { opacity: 0.25; } }
+
+/* ---------- Celular: um mundo sobre o outro ---------- */
+@media (max-width: 720px) {
+  body { font-size: 17px; }
+  .chooser { height: auto; min-height: 100dvh; overflow: visible; }
+  .chooser-head { padding-top: 1.6rem; }
+  .worlds { flex-direction: column; min-height: 100dvh; }
+  .world { flex: none; padding: 9.5rem 16px 2.5rem; min-height: 50dvh; }
+  .world + .world { padding-top: 2.5rem; }
+  .world-emblem { width: min(32vh, 55%); margin-bottom: 1rem; }
+  .worlds:hover .world:not(:hover) { filter: none; }
+  .world:hover, .world:focus-visible { flex-grow: 1; }
+  .world-elden::after { top: auto; left: 0; width: auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 90, 0.6) 30%, rgba(159, 224, 255, 0.6) 70%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

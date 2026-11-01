@@ -3,8 +3,8 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Stars } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
-import { scrollState } from '../scroll'
-import { mulberry32, makeGlowTexture } from './three-utils'
+import { scrollState } from '../../shared/scroll'
+import { mulberry32, makeGlowTexture } from '../../shared/three-utils'
 
 const smoothstep = (a, b, x) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)))

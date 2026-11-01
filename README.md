@@ -1,24 +1,21 @@
-# Portfólio · Paulo Sérgio (Elden Ring)
+# Portfólio · Paulo Sérgio
 
-Portfólio pessoal de desenvolvedor Full Stack com estética de fantasia sombria inspirada em Elden Ring. O fundo é uma cena 3D que reage ao scroll e ao mouse, e a interface imita a de um jogo: barras de HP/FP/Stamina, contador de runas e avisos como "Local de Graça Descoberto".
+Portfólio pessoal de desenvolvedor Full Stack com dois temas de fantasia no mesmo projeto. Ao entrar no site, uma tela de escolha deixa o visitante decidir qual mundo explorar:
 
-## Seções
+- **Elden Ring** (`/elden-ring`): fantasia sombria em ouro, com barras de HP/FP/Stamina, contador de runas, relíquias e locais de graça. O fundo alterna entre duas cenas 3D: o **Anel**, que se estilhaça e se recompõe com o scroll (`?cena=anel`, padrão), e a **Árvore** dourada (`?cena=arvore`).
+- **Stormlight Archive** (`/stormlight`): fantasia épica em azul, com uma grantempestade em 3D que cresce e passa conforme o scroll, Luz das Tempestades acumulada, Fluxos, fabriais e os cinco Ideais.
 
-| Seção | Conteúdo |
+Cada portfólio tem um link "Trocar portfólio" no canto superior direito que volta para a tela de escolha.
+
+## Rotas
+
+| Rota | Página |
 |---|---|
-| Início | Nome, cargo e chamada principal |
-| Capítulo I · A Origem | Sobre mim e ficha (classe, origem, idiomas, nível) |
-| Capítulo II · Atributos | Habilidades como atributos (0–99) e ferramentas como equipamento |
-| Capítulo III · Relíquias Forjadas | Projetos como itens do inventário, com escalonamento |
-| Capítulo IV · Experiência profissional | Experiência e formação em linha do tempo |
-| Capítulo Final · Local de Graça | Contato |
+| `/` | Tela de escolha |
+| `/elden-ring` | Portfólio Elden Ring |
+| `/stormlight` | Portfólio Stormlight Archive |
 
-## Cenas de fundo
-
-O botão no canto inferior esquerdo alterna entre duas cenas, e a escolha fica salva na URL:
-
-- **Anel** (`?cena=anel`, padrão): um emblema dourado que se acende, estilhaça e se recompõe conforme o scroll, com camadas de montanhas em parallax.
-- **Árvore** (`?cena=arvore`): uma árvore dourada com brasas caindo, círculo rúnico e ruínas; a câmera orbita guiada pelo scroll.
+Qualquer outra rota volta para a tela de escolha. Cada rota carrega só o próprio código e CSS (as cenas 3D só são baixadas ao entrar num portfólio), e a navegação entre elas recarrega a página para que os estilos dos temas nunca se misturem. Adicione `?nointro` à URL de um portfólio para pular a tela de abertura.
 
 ## Tecnologias
 
@@ -39,20 +36,43 @@ npm run lint     # oxlint
 
 ## Editando o conteúdo
 
-Todo o texto fica em `src/data.js`: perfil, sobre, atributos, equipamento, projetos e experiência. O nível é calculado automaticamente pela soma dos atributos. Nos projetos, `link` e `repo` vazios escondem os botões; em `profile`, o botão de currículo só aparece se `cv` estiver preenchido.
+O conteúdo está dividido em três arquivos:
+
+- `src/shared/content.js`: o que é igual nos dois temas, ou seja, contato, experiência e os fatos de cada projeto (tipo, descrição, tags, links). Edite aqui uma vez e a mudança aparece nos dois portfólios.
+- `src/elden/data.js`: textos do tema Elden Ring, com tagline, sobre, atributos (0–99), equipamento e o nome, ícone e escalonamento de cada projeto. O nível é a soma dos atributos.
+- `src/stormlight/data.js`: textos do tema Stormlight, com tagline, lema, sobre, Fluxos (0–10), Armadura Fractal e o nome e a gema de cada projeto. A gema precisa ser um dos nomes definidos em `src/stormlight/gems.js`.
+
+Nos projetos, `link` e `repo` vazios escondem os botões. Em `profile`, o botão de currículo só aparece se `cv` estiver preenchido.
 
 ## Estrutura
 
 ```
 src/
-├── App.jsx                 # layout, navegação lateral e troca de cena
-├── data.js                 # todo o conteúdo do portfólio
-├── scroll.js               # progresso do scroll compartilhado com a cena 3D
-├── index.css
-└── components/
-    ├── Sections.jsx        # seções da página
-    ├── Hud.jsx             # barras, runas, tela inicial e avisos
-    ├── RingScene.jsx       # cena "Anel"
-    ├── Scene.jsx           # cena "Árvore"
-    └── three-utils.js
+├── main.jsx                # escolhe a página pela rota e carrega só ela
+├── chooser/                # tela de escolha
+│   ├── Chooser.jsx
+│   └── chooser.css
+├── shared/
+│   ├── content.js          # conteúdo comum aos dois temas
+│   ├── scroll.js           # progresso do scroll compartilhado com a cena 3D
+│   └── three-utils.js
+├── elden/
+│   ├── App.jsx             # layout, navegação lateral e troca de cena
+│   ├── data.js
+│   ├── index.css
+│   └── components/         # Sections, Hud, RingScene (Anel), Scene (Árvore)
+└── stormlight/
+    ├── App.jsx             # layout e navegação lateral
+    ├── data.js
+    ├── gems.js             # as dez gemas e suas cores
+    ├── index.css
+    └── components/         # Sections, Hud, StormScene
+public/
+├── favicon.svg             # ícone da tela de escolha
+├── favicon-elden.svg
+└── favicon-stormlight.svg
 ```
+
+## Deploy no Cloudflare Pages
+
+Build command `npm run build`, output directory `dist`. O Pages serve o `index.html` para qualquer rota que não seja um arquivo, então `/elden-ring` e `/stormlight` funcionam sem configuração extra.

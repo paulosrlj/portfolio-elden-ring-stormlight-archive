@@ -1,27 +1,21 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Hud, Intro, Toast } from './components/Hud'
-import { Hero, About, Attributes, Projects, Journey, Contact } from './components/Sections'
-import { scrollState } from './scroll'
+import { Hero, About, Surges, Projects, Journey, Contact } from './components/Sections'
+import { scrollState } from '../shared/scroll'
+import './index.css'
 
-const scenes = {
-  anel: { label: 'Anel', Component: lazy(() => import('./components/RingScene')) },
-  arvore: { label: 'Árvore', Component: lazy(() => import('./components/Scene')) },
-}
+const StormScene = lazy(() => import('./components/StormScene'))
 
 const nav = [
   { id: 'inicio', label: 'Início' },
-  { id: 'sobre', label: 'Origem' },
-  { id: 'atributos', label: 'Atributos' },
-  { id: 'projetos', label: 'Relíquias' },
   { id: 'jornada', label: 'Jornada' },
-  { id: 'graca', label: 'Graça' },
+  { id: 'fluxos', label: 'Fluxos' },
+  { id: 'fabriais', label: 'Fabriais' },
+  { id: 'tempestades', label: 'Tempestades' },
+  { id: 'palavras', label: 'Palavras' },
 ]
 
 export default function App() {
-  const [scene, setScene] = useState(() => {
-    const param = new URLSearchParams(location.search).get('cena')
-    return scenes[param] ? param : 'anel'
-  })
   const [active, setActive] = useState('inicio')
   const [toast, setToast] = useState(null)
   const toastTimer = useRef()
@@ -47,30 +41,21 @@ export default function App() {
     }
   }, [])
 
-  const switchScene = () => {
-    const next = scene === 'anel' ? 'arvore' : 'anel'
-    setScene(next)
-    const url = new URL(location.href)
-    url.searchParams.set('cena', next)
-    history.replaceState(null, '', url)
-  }
-
-  const SceneComponent = scenes[scene].Component
-
-  const showToast = (msg) => {
+  const showToast = (msg, sub) => {
     clearTimeout(toastTimer.current)
-    setToast(msg)
-    toastTimer.current = setTimeout(() => setToast(null), 2600)
+    setToast({ msg, sub })
+    toastTimer.current = setTimeout(() => setToast(null), 3000)
   }
 
   return (
     <>
       <Suspense fallback={null}>
-        <SceneComponent key={scene} />
+        <StormScene />
       </Suspense>
       <div className="scrim" aria-hidden="true" />
-      <Intro onStart={() => showToast('Local de Graça Descoberto')} />
+      <Intro onStart={() => showToast('Vida antes da morte', 'Primeiro Ideal')} />
       <Hud />
+      <a className="portfolio-switch" href="/">Trocar portfólio</a>
       <nav className="side-nav" aria-label="Seções">
         {nav.map((n) => (
           <a key={n.id} href={`#${n.id}`} className={active === n.id ? 'active' : ''}>
@@ -82,15 +67,12 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Attributes />
+        <Surges />
         <Projects />
         <Journey />
-        <Contact onRest={() => showToast('Você descansou na graça')} />
+        <Contact onSpeak={() => showToast('Estas palavras foram aceitas', 'Quinto Ideal')} />
       </main>
-      <Toast message={toast} />
-      <button className="scene-switch" onClick={switchScene}>
-        Cena: <b>{scenes[scene].label}</b>
-      </button>
+      <Toast toast={toast} />
     </>
   )
 }

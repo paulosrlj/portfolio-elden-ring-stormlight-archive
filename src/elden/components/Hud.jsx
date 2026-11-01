@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { scrollState } from '../scroll'
+import { scrollState } from '../../shared/scroll'
 
 // Barras de HP / FP / Stamina + contador de runas
 export function Hud() {
