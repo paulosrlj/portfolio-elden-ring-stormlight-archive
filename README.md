@@ -1,5 +1,11 @@
 # Portfólio · Paulo Sérgio
 
+## Live
+
+https://portfolio-elden-storm.paulojunior9395.workers.dev/
+
+---
+
 Portfólio pessoal de desenvolvedor Full Stack com dois temas de fantasia no mesmo projeto. Ao entrar no site, uma tela de escolha deixa o visitante decidir qual mundo explorar:
 
 - **Elden Ring** (`/elden-ring`): fantasia sombria em ouro, com barras de HP/FP/Stamina, contador de runas, relíquias e locais de graça. O fundo alterna entre duas cenas 3D: o **Anel**, que se estilhaça e se recompõe com o scroll (`?cena=anel`, padrão), e a **Árvore** dourada (`?cena=arvore`).
